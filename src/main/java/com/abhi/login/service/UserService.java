@@ -17,5 +17,10 @@ public class UserService implements IUserService {
 		//DebugUtils.transactionRequired("UserService.create");
 		usersDao.create(user);
 	}
+
+	@Override
+	public boolean exists(String username) {
+		return usersDao.exists(username);
+	}
 	
 }

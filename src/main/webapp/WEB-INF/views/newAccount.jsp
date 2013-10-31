@@ -5,32 +5,97 @@
 
 <html>
 <head>
+<link href="${pageContext.request.contextPath}/resources/css/main.css" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="${pageContext.request.contextPath}/resources/javascript/jquery.js"></script>
+<script type="text/javascript">
+	
+	function onLoad(){
+		$("#password").keyup(checkPasswordsMatch);
+		$("#confirm_password").keyup(checkPasswordsMatch);
+		
+		$("#newAccount").submit(canSubmit);
+	}
+	
+	function canSubmit(){
+		
+		var password = $("#password").val();
+		var confirm_password = $("#confirm_password").val();
+		
+		if(password == confirm_password){
+			return true;
+		} else {
+			return false;
+		}
+		
+	}
+	
+	function checkPasswordsMatch(){
+		
+		var password = $("#password").val();
+		var confirm_password = $("#confirm_password").val();
+		
+		if (password.length > 8 || confirm_password.length > 8){
+			
+			if(password == confirm_password){
+				$("#match_password").text("Passwords match");
+				$("#match_password").addClass("valid");
+				$("#match_password").removeClass("error");
+			} else {
+				$("#match_password").text("Passwords do not match");
+				$("#match_password").addClass("error");
+				$("#match_password").removeClass("valid");
+			}
+			
+			return;
+		} 
+	}
+	
+	
+	
+	$(document).ready(onLoad);
+
+</script>
+
 <title>Create Account</title>
 </head>
 <body>
 	<h3>Create Account</h3>
 	
-	<sf:form method="POST" action="${pageContext.request.contextPath}/createAccount" commandName="user">
-		<table>
+	<sf:form method="POST" id="newAccount" action="${pageContext.request.contextPath}/createAccount" commandName="user">
+		<table class="formtable">
 			<tr>
-				<td>Username:</td>
-				<td><sf:input path="username" type="text" name="username"/></td>
+				<td class="label">Username:</td>
+				<td><sf:input class="control" path="username" type="text" name="username"/>
+				<div class="error">
+				<sf:errors path="username"></sf:errors>
+				</div>
+				</td>
 			</tr>
 			<tr>
-				<td>Email:</td>
-				<td><sf:input path="email" type="text" name="email"/></td>
+				<td class="label">Email:</td>
+				<td><sf:input class="control" path="email" type="text" name="email"/>
+				<div class="error">
+				<sf:errors path="email"></sf:errors>
+				</div>
+				</td>
 			</tr>
 			<tr>
-				<td>Password:</td>
-				<td><sf:input path="password" type="text" name='password' /></td>
+				<td class="label">Password:</td>
+				<td><sf:input class="control" id = "password" path="password" type="password" name='password' />
+				<div class="error">
+				<sf:errors path="password"></sf:errors>
+				</div>
+				</td>
 			</tr>
 			<tr>
-				<td>Confirm Password:</td>
-				<td><input type="text" name="confirm_password" /></td>
+				<td class="label">Confirm Password:</td>
+				<td><input class="control" id = "confirm_password" type="password" name="confirm_password" />
+				<div id="match_password">
+				</td>
 			</tr>
 			<tr>
-				<td colspan='2'><input name="submit" type="submit"
-					value="Login" /></td>
+				<td class="label" colspan='2'><input name="submit" type="submit"
+					value="Create Account" /></td>
 			</tr>
 		</table>
 	</sf:form>

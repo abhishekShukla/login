@@ -3,6 +3,7 @@ package com.abhi.login.controller;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -29,6 +30,11 @@ public class LoginController {
 		return "login";
 	}
 	
+	@RequestMapping("/logout")
+	public String showLogout(){
+		return "logout";
+	}
+	
 	@RequestMapping("/newAccount")
 	public String showNewAccount(Model model){
 		model.addAttribute("user", new User());
@@ -39,13 +45,23 @@ public class LoginController {
 	public String showCreateAccount(Model model,@Valid User user, BindingResult result){
 		
 		if(result.hasErrors()){
-			return "createAccount";
+			return "newAccount";
+		}
+		
+		if(userService.exists(user.getUsername())){
+			result.rejectValue("username", "Duplicate.user.username", "Username already exists");
+			return "newAccount";
 		}
 		
 		user.setAuthority("user");
 		user.setEnabled(true);
 		
-		userService.create(user);
+		try{
+			userService.create(user);
+		} catch(DuplicateKeyException e){
+			result.rejectValue("username", "Duplicate.user.username");
+			return "newAccount";
+		}
 		
 		return "accountCreated";
 	}

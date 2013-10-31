@@ -1,15 +1,28 @@
 package com.abhi.login.dao;
 
-public class User {
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 
+import org.hibernate.validator.constraints.Email;
+import org.hibernate.validator.constraints.NotBlank;
+
+public class User {
+	
+	@NotBlank
+	@Size(min=8, max=15)
+	@Pattern(regexp="^\\w{8,}$")
 	private String username;
 	
+	@NotBlank
+	@Size(min=8, max=15)
+	@Pattern(regexp="^\\S+$")
 	private String password;
 	
 	private boolean enabled = false;
 	
 	private String authority;
 	
+	@Email
 	private String email;
 	
 	public User(){

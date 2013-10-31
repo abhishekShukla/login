@@ -10,5 +10,7 @@
 </h1>
 
 <P>  The time on the server is ${serverTime}. </P>
+
+<p><a href = "<c:url value = '/j_spring_security_logout'></c:url>">Logout</a></p>
 </body>
 </html>
