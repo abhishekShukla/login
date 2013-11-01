@@ -1,43 +1,60 @@
 <%@ page language="java" contentType="text/html; charset=US-ASCII"
 	pageEncoding="US-ASCII"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 
 <html>
 <head>
+<link href="${pageContext.request.contextPath}/resources/css/login.css"
+	rel="stylesheet" type="text/css">
+<script type="text/javascript"
+	src="${pageContext.request.contextPath}/resources/javascript/jquery.js"></script>
 <title>Login Page</title>
 </head>
-<body onload='document.f.j_username.focus();'>
-	<h3>Login with Username and Password</h3>
-	
-	<c:if test = "${param.error != null}">
-		
-		<span class="login_error" > Login Failed. Check Username or Password </span>
-		
-	</c:if>
-	
-	<form name='f' action='${pageContext.request.contextPath}/j_spring_security_check' method='POST'>
-		<table>
-			<tr>
-				<td>User:</td>
-				<td><input type='text' name='j_username' value=''></td>
-			</tr>
-			<tr>
-				<td>Password:</td>
-				<td><input type='password' name='j_password' /></td>
-			</tr>
-			<tr>
-				<td>Remember me:</td>
-				<td><input type='checkbox' name='_spring_security_remember_me' checked='checked'/></td>
-			</tr>
-			<tr>
-				<td colspan='2'><input name="submit" type="submit"
-					value="Login" /></td>
-			</tr>
-		</table>
+<body class="body" onload='document.f.j_username.focus();'>
+
+	<form name='f'
+		action='${pageContext.request.contextPath}/j_spring_security_check'
+		method='POST' class="form">
+
+		<div class="header">
+			<h1>Login</h1>
+		</div>
+
+		<div class="content">
+
+			<input type='text' name='j_username' value='username' class="input" />
+
+			<br /> <input type='password' name='j_password' value='password'
+				class="input" />
+
+			<c:if test="${param.error != null}">
+				<br/>
+				<br/>
+				
+				<span class="login_error"> Login Failed. Check Username or
+					Password </span>
+
+			</c:if>
+
+			<div class="footer">
+				<input name="submit" type="submit" value="Login" class="login" />
+
+				<p>
+					Remember me: <input type='checkbox'
+						name='_spring_security_remember_me' checked='checked' />
+				</p>
+				<p>
+					<a href="<c:url value="/newAccount"/>">Not a member? Register.</a>
+				</p>
+
+			</div>
+
+
+
+
+		</div>
 	</form>
-	
-	<p><a href="<c:url value="/newAccount"/>">Create New Account</a></p>
-	
+
 </body>
 </html>
