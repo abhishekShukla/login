@@ -23,4 +23,8 @@ public class UserService implements IUserService {
 		return usersDao.exists(username);
 	}
 	
+    public boolean verifyLogin(String username, String password) {    	
+    	return usersDao.verifyLogin(username, password);
+    }
+	
 }

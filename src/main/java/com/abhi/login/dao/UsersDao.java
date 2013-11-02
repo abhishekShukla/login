@@ -2,6 +2,10 @@ package com.abhi.login.dao;
 
 import javax.sql.DataSource;
 
+import org.hibernate.Criteria;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
@@ -10,40 +14,51 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 @Component("usersDao")
+@Transactional
 public class UsersDao implements IUsersDao {
-
-	private NamedParameterJdbcTemplate jdbc;
 	
 	@Autowired
 	private PasswordEncoder passwordEncoder;
 	
 	@Autowired
-	public void setDataSource(DataSource jdbc){
-		this.jdbc = new NamedParameterJdbcTemplate(jdbc);
+	private SessionFactory sessionFactory;
+	
+	public Session session(){
+		return sessionFactory.getCurrentSession();
 	}
 	
-	@Transactional
-	public boolean create(User user){
+	public void create(User user){
 		
-			MapSqlParameterSource userParams = new MapSqlParameterSource();
-			userParams.addValue("username", user.getUsername());
-			userParams.addValue("password", passwordEncoder.encode(user.getPassword()));
-			userParams.addValue("email", user.getEmail());
-			userParams.addValue("enabled", user.isEnabled());
-			userParams.addValue("authority", user.getAuthority());
-			
-			jdbc.update("insert into users (username, password, email, enabled)" +
-					" values (:username, :password, :email, :enabled)", userParams);
-			
-			return jdbc.update("insert into authorities (username, authority) values (:username, :authority)", userParams) == 1;		
-		
+		System.out.println(user.getPassword());
+		user.setPassword(passwordEncoder.encode(user.getPassword()));
+		session().save(user);
 	}
 
 	@Override
 	public boolean exists(String username) {
 		// TODO Auto-generated method stub
-		return jdbc.queryForObject("select count(*) from users where username =:username", 
-					new MapSqlParameterSource("username", username), Integer.class) > 0;
+		Criteria criteria = session().createCriteria(User.class);
+		criteria.add(Restrictions.eq("username", username));
+		User user = (User)criteria.uniqueResult();
+		
+		return (user != null); 
+		
+	}
+	
+	public User getUser(String username){
+		Criteria criteria = session().createCriteria(User.class);
+		criteria.add(Restrictions.eq("username", username));
+		User user = (User)criteria.uniqueResult();
+		
+		return user;
+	}
+
+	@Override
+	public boolean verifyLogin(String username, String password) {
+		
+		User user = this.getUser(username);
+	    return (user != null) &&  passwordEncoder.matches(password, user.getPassword());
+		
 	}
 
 }

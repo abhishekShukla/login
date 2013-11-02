@@ -1,28 +1,36 @@
 package com.abhi.login.dao;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotBlank;
 
+@Entity
+@Table(name="users")
 public class User {
 	
-	@NotBlank
-	@Size(min=8, max=15)
-	@Pattern(regexp="^\\w{8,}$")
+	@NotBlank(groups={PersistenceValidationGroup.class, FormValidationGroup.class})
+	@Size(min=8, max=15, groups={PersistenceValidationGroup.class, FormValidationGroup.class})
+	@Pattern(regexp="^\\w{8,}$", groups={PersistenceValidationGroup.class, FormValidationGroup.class})
+	@Id
+	@Column(name="username")
 	private String username;
 	
-	@NotBlank
-	@Size(min=8, max=15)
-	@Pattern(regexp="^\\S+$")
+	@NotBlank(groups={PersistenceValidationGroup.class, FormValidationGroup.class})
+	@Size(min=8, max=15, groups={FormValidationGroup.class})
+	@Pattern(regexp="^\\S+$", groups={PersistenceValidationGroup.class, FormValidationGroup.class})
 	private String password;
 	
 	private boolean enabled = false;
 	
 	private String authority;
 	
-	@Email
+	@Email(groups={PersistenceValidationGroup.class, FormValidationGroup.class})
 	private String email;
 	
 	public User(){

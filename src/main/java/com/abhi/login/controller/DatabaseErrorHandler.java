@@ -12,5 +12,11 @@ public class DatabaseErrorHandler {
 		ex.printStackTrace();
 		return "error";
 	}
+	
+	@ExceptionHandler(NullPointerException.class)
+	public String handleNullPointerException(NullPointerException ex){
+		ex.printStackTrace();
+		return "error";
+	}
 
 }

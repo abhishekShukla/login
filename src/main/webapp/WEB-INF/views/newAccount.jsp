@@ -92,6 +92,9 @@
 				<input name="submit" type="submit" value="Create Account"
 					class="login" />
 			</div>
+			<p>
+				<a href="<c:url value='/login'/>">Already a member? Sign in.</a>
+			</p>
 	</sf:form>
 </body>
 </html>
