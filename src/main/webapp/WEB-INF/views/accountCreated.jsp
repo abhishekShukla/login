@@ -7,6 +7,6 @@
 <title>Account Created</title>
 </head>
 <body>
-	<p>Your account was created</p>
+	<p>Your account was created for you. Please validate your e-mail address</p>
 </body>
 </html>

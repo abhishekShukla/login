@@ -1,16 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:security="http://www.springframework.org/schema/security"
-	xsi:schemaLocation="http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-3.1.xsd
+	xmlns:jee="http://www.springframework.org/schema/jee"
+	xsi:schemaLocation="http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-3.2.xsd
+		http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-3.1.xsd
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
-
-	<security:authentication-manager>
-		<security:authentication-provider>
-			<security:jdbc-user-service
-				data-source-ref="dataSource" id="jdbcUserService" />
-			<security:password-encoder ref="passwordEncoder"></security:password-encoder>
-		</security:authentication-provider>
-	</security:authentication-manager>
 
 	<security:authentication-manager>
 		<security:authentication-provider
@@ -29,6 +23,8 @@
 			access="permitAll" />
 		<security:intercept-url pattern="/accountCreated"
 			access="permitAll" />
+		<security:intercept-url pattern="/verify"
+			access="permitAll" />
 		<security:intercept-url pattern="/resources/**"
 			access="permitAll" />
 		<security:intercept-url pattern="/**"
@@ -36,8 +32,7 @@
 		<security:form-login login-page="/login"
 			authentication-failure-url="/login?error=true" />
 		<security:logout logout-success-url="/logout" />
-		<security:remember-me key="loginAppKey"
-			data-source-ref="dataSource" />
+		<security:remember-me data-source-ref="dataSource" />
 	</security:http>
 
 	<bean id="passwordEncoder"

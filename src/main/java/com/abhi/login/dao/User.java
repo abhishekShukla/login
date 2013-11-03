@@ -30,6 +30,8 @@ public class User {
 	
 	private String authority;
 	
+	private String uuid;
+
 	@Email(groups={PersistenceValidationGroup.class, FormValidationGroup.class})
 	private String email;
 	
@@ -87,6 +89,14 @@ public class User {
 
 	public void setEmail(String email) {
 		this.email = email;
+	}
+	
+	public String getUuid() {
+		return uuid;
+	}
+
+	public void setUuid(String uuid) {
+		this.uuid = uuid;
 	}
 
 }

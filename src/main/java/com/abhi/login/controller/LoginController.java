@@ -8,6 +8,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.abhi.login.dao.FormValidationGroup;
 import com.abhi.login.dao.User;
@@ -18,12 +19,7 @@ public class LoginController {
 	
 	@Autowired
 	private IUserService userService;
-	
-	/*
-	public void setUserService(IUserService userService) {
-		this.userService = userService;
-	}
-	*/
+
 
 	@RequestMapping("/login")
 	public String showLogin(){
@@ -53,17 +49,32 @@ public class LoginController {
 			result.rejectValue("username", "Duplicate.user.username", "Username already exists");
 			return "newAccount";
 		}
-		
+		user.setUuid(java.util.UUID.randomUUID().toString());
 		user.setAuthority("user");
-		user.setEnabled(true);
+		user.setEnabled(false);
 		
 		try{
 			userService.create(user);
+			userService.email(user);
 		} catch(DuplicateKeyException e){
 			result.rejectValue("username", "Duplicate.user.username");
 			return "newAccount";
 		}
 		
 		return "accountCreated";
+	}
+	
+	@RequestMapping(value="/verify", method=RequestMethod.GET)
+	public String showVerifiedAccount(Model model, @RequestParam String id){
+		
+		User user = userService.emailVerify(id);
+		
+		if(user != null && user.isEnabled()){
+			return "home";
+		} else {
+			return "accountCreated";
+		}
+		
+		
 	}
 }

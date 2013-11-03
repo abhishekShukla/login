@@ -57,8 +57,22 @@ public class UsersDao implements IUsersDao {
 	public boolean verifyLogin(String username, String password) {
 		
 		User user = this.getUser(username);
-	    return (user != null) &&  passwordEncoder.matches(password, user.getPassword());
+	    return (user != null) &&  passwordEncoder.matches(password, user.getPassword()) && user.isEnabled();
 		
+	}
+
+	@Override
+	public User emailVerify(String access) {
+		
+		Criteria criteria = session().createCriteria(User.class);
+		criteria.add(Restrictions.eq("uuid", access));
+		User user = (User)criteria.uniqueResult();
+		
+		if(user != null){
+			user.setEnabled(true);
+		}
+		
+		return user;
 	}
 
 }

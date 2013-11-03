@@ -10,4 +10,9 @@ public interface IUserService {
 	
 	public boolean verifyLogin(String username, String password);
 	
+	public User emailVerify(String access);
+	
+	public boolean email(User user);
+	
+	
 }
