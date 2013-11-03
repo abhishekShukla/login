@@ -57,7 +57,7 @@ public class UsersDao implements IUsersDao {
 	public boolean verifyLogin(String username, String password) {
 		
 		User user = this.getUser(username);
-	    return (user != null) &&  passwordEncoder.matches(password, user.getPassword()) && user.isEnabled();
+	    return (user != null) &&  passwordEncoder.matches(password, user.getPassword());
 		
 	}
 

@@ -96,7 +96,9 @@ public class UserService implements IUserService, UserDetailsService {
 			List<GrantedAuthority> grantedAuths = new ArrayList<GrantedAuthority>();
 			grantedAuths.add(new SimpleGrantedAuthority("ROLE_USER"));
 			UserDetails UdUser = new org.springframework.security.core.userdetails.User(user.getUsername(), 
-					user.getPassword(), grantedAuths); 
+					user.getPassword(), user.isEnabled(), true, true, 
+					true, grantedAuths); 
+			
 			return UdUser;
 		} else {
 			throw new UsernameNotFoundException(username + " not found!");	
