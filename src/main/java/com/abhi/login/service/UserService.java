@@ -85,6 +85,11 @@ public class UserService implements IUserService, UserDetailsService {
 
 		return false;
 	}
+	
+	@Override
+	public User getUserByUsername(String username){
+		return usersDao.getUser(username);
+	}
 
 	@Override
 	public UserDetails loadUserByUsername(String username)

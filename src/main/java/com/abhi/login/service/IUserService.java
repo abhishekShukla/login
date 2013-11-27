@@ -14,5 +14,6 @@ public interface IUserService {
 	
 	public boolean email(User user);
 	
+	public User getUserByUsername(String username);
 	
 }

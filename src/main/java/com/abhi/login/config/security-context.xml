@@ -17,6 +17,10 @@
 			access="permitAll" />
 		<security:intercept-url pattern="/logout"
 			access="permitAll" />
+		<security:intercept-url pattern="/signin/**"
+			access="permitAll" />
+		<security:intercept-url pattern="/signup/**"
+			access="permitAll" />
 		<security:intercept-url pattern="/newAccount"
 			access="permitAll" />
 		<security:intercept-url pattern="/createAccount"
@@ -41,6 +45,11 @@
 
 	<bean id="customAuthenticationProvider" class="com.abhi.login.dao.CustomAuthenticationProvider">
 	</bean>
-
+	
+	
+	
+		<bean id="textEncryptor"
+		class="org.springframework.security.crypto.encrypt.Encryptors"
+		factory-method="noOpText" />
 
 </beans>

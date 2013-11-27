@@ -8,7 +8,8 @@
         /WEB-INF/spring/root-context.xml
         classpath:com/abhi/login/config/dao-context.xml
         classpath:com/abhi/login/config/service-context.xml
-        classpath:com/abhi/login/config/security-context.xml        
+        classpath:com/abhi/login/config/security-context.xml
+        classpath:com/abhi/login/config/social-context.xml         
     </param-value>
   </context-param>
   

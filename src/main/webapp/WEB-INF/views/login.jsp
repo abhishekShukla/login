@@ -1,6 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=US-ASCII"
 	pageEncoding="US-ASCII"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib
+	uri="http://www.springframework.org/spring-social/facebook/tags"
+	prefix="facebook"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 
 <html>
@@ -10,6 +13,7 @@
 <script type="text/javascript"
 	src="${pageContext.request.contextPath}/resources/javascript/jquery.js"></script>
 <title>Login Page</title>
+<facebook:init appId="@facebookProvider.appId" />
 </head>
 <body class="body" onload='document.f.j_username.focus();'>
 
@@ -29,9 +33,9 @@
 				class="input" />
 
 			<c:if test="${param.error != null}">
-				<br/>
-				<br/>
-				
+				<br />
+				<br />
+
 				<span class="login_error"> Login Failed. Check Username or
 					Password </span>
 
@@ -54,6 +58,14 @@
 
 
 		</div>
+	</form>
+
+	<form id="fb_signin" action="<c:url value="/signin/facebook"/>"
+		method="POST">
+		<div id="fb-root"></div>
+		<p>
+			<input name="submit" type="submit" value="Sign in with Facebook" class="login" />
+		</p>
 	</form>
 
 </body>

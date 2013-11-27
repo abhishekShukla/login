@@ -23,5 +23,12 @@
 			</props>
 		</property>
 	</bean>
-
+	
+	
+	<bean id="signInAdapter"
+		class="com.abhi.login.service.LoginSignInAdapter"
+		autowire="constructor" />
+	
+	<bean id="accountConnectionSignUp" class="com.abhi.login.service.AccountConnectionSignUp" />
+	
 </beans>

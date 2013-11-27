@@ -57,7 +57,7 @@ public class LoginController {
 			userService.create(user);
 			userService.email(user);
 		} catch(DuplicateKeyException e){
-			result.rejectValue("username", "Duplicate.user.username");
+			result.rejectValue("email", "Duplicate.user.email");
 			return "newAccount";
 		}
 		
