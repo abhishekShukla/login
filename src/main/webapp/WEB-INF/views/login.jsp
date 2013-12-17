@@ -17,9 +17,8 @@
 </head>
 <body class="body" onload='document.f.j_username.focus();'>
 
-	<form name='f'
-		action='${pageContext.request.contextPath}/j_spring_security_check'
-		method='POST' class="form">
+
+	<div class="form">
 
 		<div class="header">
 			<h1>Login</h1>
@@ -27,46 +26,47 @@
 
 		<div class="content">
 
-			<input type='text' name='j_username' value='username' class="input" />
+			<form name='f'
+				action='${pageContext.request.contextPath}/j_spring_security_check'
+				method='POST'>
 
-			<br /> <input type='password' name='j_password' value='password'
-				class="input" />
+				<input type='text' name='j_username' value='username' class="input" />
 
-			<c:if test="${param.error != null}">
-				<br />
-				<br />
+				<br /> <input type='password' name='j_password' value='password'
+					class="input" />
 
-				<span class="login_error"> Login Failed. Check Username or
-					Password </span>
+				<c:if test="${param.error != null}">
+					<br />
+					<br />
 
-			</c:if>
+					<span class="login_error"> Login Failed. Check Username or
+						Password </span>
 
-			<div class="footer">
-				<input name="submit" type="submit" value="Login" class="login" />
 
+				</c:if>
 				<p>
 					Remember me: <input type='checkbox'
 						name='_spring_security_remember_me' checked='checked' />
 				</p>
+				<input name="submit" type="submit" value="Login" class="login" />
+			</form>
+			<div class="footer">
 				<p>
 					<a href="<c:url value="/newAccount"/>">Not a member? Register.</a>
 				</p>
 
+				<form id="fb_signin" action="<c:url value="/signin/facebook"/>"
+					method="POST">
+					<div id="fb-root"></div>
+					<p>
+						<input name="submit" type="image"
+							src="${pageContext.request.contextPath}/resources/images/fb-login.png"
+							class="fb-login" />
+					</p>
+				</form>
 			</div>
-
-
-
-
 		</div>
-	</form>
-
-	<form id="fb_signin" action="<c:url value="/signin/facebook"/>"
-		method="POST">
-		<div id="fb-root"></div>
-		<p>
-			<input name="submit" type="submit" value="Sign in with Facebook" class="login" />
-		</p>
-	</form>
+	</div>
 
 </body>
 </html>

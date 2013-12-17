@@ -34,17 +34,12 @@ public class AccountConnectionSignUp implements ConnectionSignUp {
             user.setEnabled(true);
             user.setAuthority("user");
             user.setUuid(java.util.UUID.randomUUID().toString());
-            
-            
+        
             usersDao.create(user);
             
-            SecurityContextHolder.getContext().setAuthentication(
-                    new UsernamePasswordAuthenticationToken(user.getUsername(), null, null));
         } else {
         	System.out.println("In else! AUTO");
         	user = usersDao.getUser(socialMediaProfile.getFirstName() + socialMediaProfile.getLastName());
-        	SecurityContextHolder.getContext().setAuthentication(
-                    new UsernamePasswordAuthenticationToken(user.getUsername(), null, null));
         }
         
 		return user.getUsername();

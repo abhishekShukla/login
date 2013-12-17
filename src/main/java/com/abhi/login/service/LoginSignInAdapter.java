@@ -18,7 +18,7 @@ public class LoginSignInAdapter implements SignInAdapter {
     	
     	
     	System.out.println("Here here here!!!");
-    	
+    	System.out.println(localUserId);
         SecurityContextHolder.getContext().setAuthentication(
             new UsernamePasswordAuthenticationToken(localUserId, null, null));
     	

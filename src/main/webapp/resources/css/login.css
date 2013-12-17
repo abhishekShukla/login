@@ -99,7 +99,23 @@ FOOTER
 }
 
 /* Login button */
-.form .footer .login {
+.form .footer .fb-login {
+	width: 45%;
+	height: 5%;
+	
+	text-align: center;
+	font-family: 'Bree Serif', serif;
+	font-weight: 300;
+	font-size: large;
+	color: #fff;
+	
+	background: #4682B4;
+	border: none;
+	border-radius: 5%;
+	cursor: pointer;
+}
+
+.form .content .login {
 	width: 35%;
 	
 	text-align: center;
